@@ -1,0 +1,18 @@
+version: "3.0"
+
+services:
+    geth:
+        image: "ethereum/client-go:${IMAGE_TAG}"
+        entrypoint: /bin/sh
+        volumes:
+            - "${DATA_DIR}:/root/.ethereum"
+            - ./scripts:/root/scripts
+        ports:
+            - "${HTTP_PORT}:${HTTP_PORT}/tcp"
+            - "${P2P_PORT}:${P2P_PORT}/tcp"
+            - "${P2P_PORT}:${P2P_PORT}/udp"
+        command: /root/scripts/start-geth.sh
+        environment:
+            - ETH_NETWORK_ID=${ETH_NETWORK_ID}
+            - P2P_PORT=${P2P_PORT}
+            - HTTP_PORT=${HTTP_PORT}

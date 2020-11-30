@@ -16,3 +16,4 @@ services:
             - ETH_NETWORK_ID
             - P2P_PORT
             - HTTP_PORT
+        restart: on-failure

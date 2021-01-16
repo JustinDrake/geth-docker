@@ -8,7 +8,7 @@ services:
             - "${DATA_DIR}:/root/.ethereum"
             - ./scripts:/root/scripts:ro
         ports:
-            - "${HTTP_PORT}:${HTTP_PORT}/tcp"
+            - "127.0.0.1:${HTTP_PORT}:${HTTP_PORT}/tcp"
             - "${P2P_PORT}:${P2P_PORT}/tcp"
             - "${P2P_PORT}:${P2P_PORT}/udp"
         command: /root/scripts/start-geth.sh

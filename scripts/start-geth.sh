@@ -8,4 +8,4 @@ exec geth \
     --maxpeers $MAX_PEERS \
     --http --http.port $HTTP_PORT --http.addr "0.0.0.0" --http.vhosts=* --http.api "eth,net" \
     --ipcdisable \
-    --nousb
+    --txlookuplimit=0

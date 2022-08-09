@@ -1,3 +1,5 @@
+data/
+validator_keys/
 .env
-geth-data
 docker-compose.override.yaml
+docker-compose.override.yml

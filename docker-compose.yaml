@@ -2,19 +2,49 @@ version: "3.0"
 
 services:
     geth:
-        image: "ethereum/client-go:${IMAGE_TAG}"
-        entrypoint: /bin/sh
+        image: "ethereum/client-go:${GETH_TAG}"
         volumes:
-            - "${DATA_DIR}:/root/.ethereum"
-            - ./scripts:/root/scripts:ro
+            - "${EXECUTION_DATA}:/root/.ethereum"
         ports:
-            - "127.0.0.1:${HTTP_PORT}:${HTTP_PORT}/tcp"
-            - "${P2P_PORT}:${P2P_PORT}/tcp"
-            - "${P2P_PORT}:${P2P_PORT}/udp"
-        command: /root/scripts/start-geth.sh
+            - "${EXECUTION_P2P_PORT}:${EXECUTION_P2P_PORT}/tcp"
+            - "${EXECUTION_P2P_PORT}:${EXECUTION_P2P_PORT}/udp"
+        command: >-
+            --${NETWORK}
+            --port ${EXECUTION_P2P_PORT}
+            --http --http.addr "0.0.0.0" --http.vhosts=* --http.api "eth,net"
+            --ipcdisable
+        restart: always
+        stop_grace_period: 3m
+    lighthouse:
+        image: sigp/lighthouse:${LIGHTHOUSE_TAG}
+        volumes:
+            - "${CONSENSUS_DATA}:/root/.lighthouse"
+        ports:
+            - "${CONSENSUS_P2P_PORT}:${CONSENSUS_P2P_PORT}/tcp"
+            - "${CONSENSUS_P2P_PORT}:${CONSENSUS_P2P_PORT}/udp"
+        entrypoint: /usr/local/bin/lighthouse
+        command: >-
+            --network ${NETWORK}
+	        beacon_node
+	        --eth1-endpoints http://geth:8545
+	        --http
+	        --http-address 0.0.0.0
+            --private
+            --eth1
+        restart: always
+        stop_grace_period: 3m
+    lighthouse_validator:
+        image: sigp/lighthouse:${LIGHTHOUSE_TAG}
+        volumes:
+            - "${CONSENSUS_DATA}:/root/.lighthouse"
+            - ./scripts:/root/scripts:ro
+            - ./validator_keys:/root/validator_keys:ro
+        depends_on:
+            - lighthouse
         environment:
-            - ETH_NETWORK_ID
-            - P2P_PORT
-            - HTTP_PORT
-            - MAX_PEERS
-        restart: on-failure
+            - KEYSTORE_PASSWD
+            - NETWORK
+        entrypoint: /bin/sh
+        command: /root/scripts/start-validator-client.sh
+        restart: always
+        stop_grace_period: 3m

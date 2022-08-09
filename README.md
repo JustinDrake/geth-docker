@@ -1,19 +1,23 @@
 # geth-docker
-A docker-compose environment for running Geth
+A docker-compose environment for running Geth+Lighthouse
 
 ## Usage
 
-### Configure and start Geth
+### Configure and start
 
 1. ```bash
    cp .env.example .env
    ```
 1. Edit `.env`
+1. Create JWT secret and save it in `jwtsecret.txt`. E.g. run
+   ```sh
+   openssl rand -hex 32 | tr -d "\n" > "jwtsecret.txt"
+   ```
 1. ```bash
    ./start.sh
    ```
 
-### Stop Geth
+### Stop
 
 1. ```bash
    docker-compose down

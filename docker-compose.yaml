@@ -29,11 +29,10 @@ services:
         command: >-
             --network ${NETWORK}
             beacon_node
-            --http
-            --http-address 0.0.0.0
+            --http --http-address 0.0.0.0
             --private
-            --execution-endpoint http://geth:8551
-            --execution-jwt /jwtsecret
+            --execution-endpoint http://geth:8551 --execution-jwt /jwtsecret
+            --suggested-fee-recipient ${DEFAULT_FEE_RECIPIENT}
         restart: always
         stop_grace_period: 3m
     lighthouse_validator:

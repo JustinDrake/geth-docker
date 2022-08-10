@@ -29,6 +29,8 @@ services:
         command: >-
             --network ${NETWORK}
             beacon_node
+            --disable-upnp
+            --subscribe-all-subnets
             --http --http-address 0.0.0.0
             --private
             --execution-endpoint http://geth:8551 --execution-jwt /jwtsecret

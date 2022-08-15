@@ -10,6 +10,7 @@ services:
         command: >-
             --${NETWORK}
             --port ${EXECUTION_P2P_PORT}
+            --maxpeers ${GETH_PEERS}
             --http --http.addr "0.0.0.0" --http.vhosts=* --http.api "eth,net"
             --authrpc.addr "0.0.0.0" --authrpc.vhosts=* --authrpc.jwtsecret /jwtsecret
             --ipcdisable
@@ -29,6 +30,7 @@ services:
             beacon_node
             --disable-upnp
             --subscribe-all-subnets
+            --target-peers ${LIGHTHOUSE_PEERS}
             --http --http-address 0.0.0.0
             --private
             --execution-endpoint http://geth:8551 --execution-jwt /jwtsecret

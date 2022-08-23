@@ -30,6 +30,7 @@ services:
             beacon_node
             --disable-upnp
             --subscribe-all-subnets
+            --import-all-attestations
             --target-peers ${LIGHTHOUSE_PEERS}
             --http --http-address 0.0.0.0
             --private

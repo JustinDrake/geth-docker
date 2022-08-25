@@ -22,3 +22,9 @@ A docker-compose environment for running Geth+Lighthouse
 1. ```bash
    docker-compose down
    ```
+
+### Get keymanager API auth token
+
+```bash
+cat ${CONSENSUS_DATA}/${NETWORK}/validators/api-token.txt
+```

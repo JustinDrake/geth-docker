@@ -44,6 +44,9 @@ services:
             - "${CONSENSUS_DATA}:/root/.lighthouse"
             - ./scripts:/root/scripts:ro
             - ./validator_keys:/root/validator_keys:ro
+        ports:
+            # Expose keymanager API to the host machine.
+            - 127.0.0.1:5062:5062/tcp
         depends_on:
             - lighthouse
         environment:

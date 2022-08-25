@@ -52,6 +52,7 @@ services:
         environment:
             - KEYSTORE_PASSWD
             - NETWORK
+            - DEFAULT_FEE_RECIPIENT
         entrypoint: /bin/sh
         command: /root/scripts/start-validator-client.sh
         restart: always

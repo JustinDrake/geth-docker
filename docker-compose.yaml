@@ -28,6 +28,8 @@ services:
         command: >-
             --network ${NETWORK}
             beacon_node
+            --port ${CONSENSUS_P2P_PORT}
+            --discovery-port ${CONSENSUS_P2P_PORT}
             --disable-upnp
             --subscribe-all-subnets
             --import-all-attestations

@@ -14,6 +14,7 @@ fi
 exec lighthouse \
     --network $NETWORK \
     validator \
+    --enable-doppelganger-protection \
     --suggested-fee-recipient $DEFAULT_FEE_RECIPIENT \
     --beacon-nodes http://lighthouse:5052 \
     --http --http-address=0.0.0.0 --http-port=5062 --unencrypted-http-transport

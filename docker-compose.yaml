@@ -44,18 +44,18 @@ services:
         image: sigp/lighthouse:${LIGHTHOUSE_TAG}
         volumes:
             - "${CONSENSUS_DATA}:/root/.lighthouse"
-            - ./scripts:/root/scripts:ro
-            - ./validator_keys:/root/validator_keys:ro
         ports:
             # Expose keymanager API to the host machine.
-            - 127.0.0.1:5062:5062/tcp
+            - "127.0.0.1:${KEYMANAGER_PORT}:${KEYMANAGER_PORT}/tcp"
         depends_on:
             - lighthouse
-        environment:
-            - KEYSTORE_PASSWD
-            - NETWORK
-            - DEFAULT_FEE_RECIPIENT
-        entrypoint: /bin/sh
-        command: /root/scripts/start-validator-client.sh
+        entrypoint: /usr/local/bin/lighthouse
+        command: >-
+            --network ${NETWORK}
+            validator
+            --enable-doppelganger-protection
+            --suggested-fee-recipient ${DEFAULT_FEE_RECIPIENT}
+            --beacon-nodes http://lighthouse:5052
+            --http --http-address=0.0.0.0 --http-port=${KEYMANAGER_PORT} --unencrypted-http-transport
         restart: always
         stop_grace_period: 3m

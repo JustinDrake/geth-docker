@@ -43,7 +43,7 @@ services:
     lighthouse_validator:
         image: sigp/lighthouse:${LIGHTHOUSE_TAG}
         volumes:
-            - "${CONSENSUS_DATA}:/root/.lighthouse"
+            - "${VALIDATOR_DATA}:/root/.lighthouse"
         ports:
             # Expose keymanager API to the host machine.
             - "127.0.0.1:${KEYMANAGER_PORT}:${KEYMANAGER_PORT}/tcp"

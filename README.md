@@ -26,5 +26,5 @@ A docker-compose environment for running Geth+Lighthouse
 ### Get keymanager API auth token
 
 ```bash
-cat ${CONSENSUS_DATA}/${NETWORK}/validators/api-token.txt
+cat ${VALIDATOR_DATA}/${NETWORK}/validators/api-token.txt
 ```

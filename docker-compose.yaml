@@ -34,6 +34,7 @@ services:
             --subscribe-all-subnets
             --import-all-attestations
             --target-peers ${LIGHTHOUSE_PEERS}
+            ${LIGHTHOUSE_BN_MEVBOOST_FLAGS}
             --http --http-address 0.0.0.0
             --private
             --execution-endpoint http://geth:8551 --execution-jwt /jwtsecret
@@ -56,6 +57,17 @@ services:
             --enable-doppelganger-protection
             --suggested-fee-recipient ${DEFAULT_FEE_RECIPIENT}
             --beacon-nodes http://lighthouse:5052
+            ${LIGHTHOUSE_VC_MEVBOOST_FLAGS}
             --http --http-address=0.0.0.0 --http-port=${KEYMANAGER_PORT} --unencrypted-http-transport
         restart: always
         stop_grace_period: 3m
+    mevboost:
+        image: flashbots/mev-boost:${MEVBOOST_TAG}
+        restart: always
+        profiles:
+          - mevboost
+        command: >-
+          -addr 0.0.0.0:18550
+          -${NETWORK}
+          -relay-check
+          -relays ${MEVBOOST_RELAYS}
